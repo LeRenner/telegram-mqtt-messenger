@@ -19,6 +19,12 @@ with open('/secret/token', 'r') as file:
 with open('/secret/chat_id', 'r') as file:
     telegram_chat_id = file.read().replace('\n', '')
 
+# debug prints
+print("MQTT Broker Host: " + mqtt_broker_host)
+print("MQTT Broker Port: " + str(mqtt_broker_port))
+print("MQTT Topic: " + mqtt_topic)
+print("Telegram Chat ID: " + telegram_chat_id)
+
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to MQTT Broker")
@@ -27,6 +33,7 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     message = msg.payload.decode("utf-8")
+    print("Message received: " + message)
     send_to_telegram(message)
 
 
