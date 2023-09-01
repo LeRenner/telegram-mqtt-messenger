@@ -3,7 +3,6 @@ from telegram import Bot
 import sys
 
 # print both on stdout and stderr
-print("Starting Pudim Messenger")
 print("Starting Pudim Messenger", file=sys.stderr)
 
 
@@ -25,24 +24,25 @@ with open('/secret/chat_id', 'r') as file:
     telegram_chat_id = file.read().replace('\n', '')
 
 # debug prints
-print("MQTT Broker Host: " + mqtt_broker_host)
-print("MQTT Broker Port: " + str(mqtt_broker_port))
-print("MQTT Topic: " + mqtt_topic)
-print("Telegram Chat ID: " + telegram_chat_id)
+print("MQTT Broker Host: " + mqtt_broker_host, file=sys.stderr)
+print("MQTT Broker Port: " + str(mqtt_broker_port), file=sys.stderr)
+print("MQTT Topic: " + mqtt_topic, file=sys.stderr)
+print("Telegram Chat ID: " + telegram_chat_id, file=sys.stderr)
 
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected to MQTT Broker")
+    print("Connected to MQTT Broker", file=sys.stderr)
     client.subscribe(mqtt_topic)
 
 
 def on_message(client, userdata, msg):
     message = msg.payload.decode("utf-8")
-    print("Message received: " + message)
+    print("Message received: " + message, file=sys.stderr)
     send_to_telegram(message)
 
 
 def send_to_telegram(message):
+    print("Sending message to Telegram", file=sys.stderr)
     bot = Bot(token=telegram_bot_token)
     bot.send_message(chat_id=telegram_chat_id, text=message)
 
