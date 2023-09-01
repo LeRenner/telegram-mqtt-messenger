@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 from telegram import Bot
+import sys
 
 
 # MQTT settings
@@ -42,11 +43,10 @@ def send_to_telegram(message):
     bot.send_message(chat_id=telegram_chat_id, text=message)
 
 
-if __name__ == "__main__":
-    mqtt_client = mqtt.Client()
-    mqtt_client.on_connect = on_connect
-    mqtt_client.on_message = on_message
+mqtt_client = mqtt.Client()
+mqtt_client.on_connect = on_connect
+mqtt_client.on_message = on_message
 
-    mqtt_client.connect(mqtt_broker_host, mqtt_broker_port, 60)
+mqtt_client.connect(mqtt_broker_host, mqtt_broker_port, 60)
 
-    mqtt_client.loop_forever()
+mqtt_client.loop_forever()
