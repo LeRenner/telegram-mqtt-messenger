@@ -14,9 +14,9 @@ mqtt_topic = "pudimMessenger"
 # Telegram settings
 # token is at /config/token and chat_id is at /config/chat_id
 # read files and assign to variables
-with open('/config/token', 'r') as file:
+with open('/secret/token', 'r') as file:
     telegram_bot_token = file.read().replace('\n', '')
-with open('/config/chat_id', 'r') as file:
+with open('/secret/chat_id', 'r') as file:
     telegram_chat_id = file.read().replace('\n', '')
 
 
