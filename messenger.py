@@ -2,6 +2,10 @@ import paho.mqtt.client as mqtt
 from telegram import Bot
 import sys
 
+# print both on stdout and stderr
+print("Starting Pudim Messenger")
+print("Starting Pudim Messenger", file=sys.stderr)
+
 
 # MQTT settings
 # hostname is at /config/hostname and port is at /config/port
