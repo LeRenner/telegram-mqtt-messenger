@@ -30,6 +30,7 @@ with open("/secret/chat_id2", "r") as file:
 def on_connect(client, userdata, flags, rc):
     print("Connected to MQTT Broker", file=sys.stderr)
     client.subscribe(mqtt_topic)
+    client.subscribe(mqtt_topic2)
 
 
 def on_message(client, userdata, msg):
