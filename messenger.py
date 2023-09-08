@@ -50,7 +50,7 @@ def send_to_telegram(message, bot):
     elif bot == 2:
         print("Sending message to mail bot on Telegram", file=sys.stderr)
         bot = Bot(token=telegram_bot_token2)
-        asyncio.run(bot.send_message(chat_id=telegram_chat_id2, text=message))
+        asyncio.run(bot.send_message(chat_id=telegram_chat_id2, text=message, parse_mode="HTML"))
 
 
 mqtt_client = mqtt.Client()
