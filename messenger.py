@@ -12,12 +12,19 @@ with open('/config/hostname', 'r') as file:
 with open('/config/port', 'r') as file:
     mqtt_broker_port = int(file.read().replace('\n', ''))
 mqtt_topic = "pudimMessenger"
+mqtt_topic2 = "pudimMail"
 
 # token is at /config/token and chat_id is at /config/chat_id
 with open('/secret/token', 'r') as file:
     telegram_bot_token = file.read().replace('\n', '')
 with open('/secret/chat_id', 'r') as file:
     telegram_chat_id = file.read().replace('\n', '')
+
+# get token and chat id 2
+with open("/secret/token2", "r") as file:
+    telegram_bot_token2 = file.read().replace("\n", "")
+with open("/secret/chat_id2", "r") as file:
+    telegram_chat_id2 = file.read().replace("\n", "")
 
 
 def on_connect(client, userdata, flags, rc):
@@ -28,13 +35,21 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     message = msg.payload.decode("utf-8")
     print("Message received: " + message, file=sys.stderr)
-    send_to_telegram(message)
+    if msg.topic == mqtt_topic:
+        send_to_telegram(message, 1)
+    elif msg.topic == mqtt_topic2:
+        send_to_telegram(message, 2)
 
 
-def send_to_telegram(message):
-    print("Sending message to Telegram", file=sys.stderr)
-    bot = Bot(token=telegram_bot_token)
-    asyncio.run(bot.send_message(chat_id=telegram_chat_id, text=message))
+def send_to_telegram(message, bot):
+    if bot == 1:
+        print("Sending message to main bot on Telegram", file=sys.stderr)
+        bot = Bot(token=telegram_bot_token)
+        asyncio.run(bot.send_message(chat_id=telegram_chat_id, text=message))
+    elif bot == 2:
+        print("Sending message to mail bot on Telegram", file=sys.stderr)
+        bot = Bot(token=telegram_bot_token2)
+        asyncio.run(bot.send_message(chat_id=telegram_chat_id2, text=message))
 
 
 mqtt_client = mqtt.Client()
