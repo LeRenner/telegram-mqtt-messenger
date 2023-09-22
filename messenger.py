@@ -52,7 +52,7 @@ def send_to_telegram(message, botToken, chatId):
     print("Sending message to user " + chatId)
     print(message)
     bot = Bot(botToken)
-    asyncio.run(bot.sendMessage(chatId, message))
+    asyncio.run(bot.sendMessage(chatId, message, parse_mode="HTML"))
 
 
 mqtt_client = mqtt.Client()
