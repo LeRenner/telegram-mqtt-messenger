@@ -23,12 +23,12 @@ with open('/config/topics', 'r') as file:
         mqttTopics.append(line.replace('\n', ''))
 
 botTokens = []
-with open('/config/tokens', 'r') as file:
+with open('/secret/tokens', 'r') as file:
     for line in file:
         botTokens.append(line.replace('\n', ''))
 
 chatIDs = []
-with open('/config/chatids', 'r') as file:
+with open('/secret/chatids', 'r') as file:
     for line in file:
         chatIDs.append(line.replace('\n', ''))
 
@@ -49,7 +49,8 @@ def on_message(client, userdata, msg):
 
 
 def send_to_telegram(message, botToken, chatId):
-    print("Sending message to Telegram")
+    print("Sending message to user " + chatId)
+    print(message)
     bot = Bot(botToken)
     asyncio.run(bot.sendMessage(chatId, message))
 
